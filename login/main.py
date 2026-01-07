@@ -6,9 +6,8 @@ app = Flask(__name__)
 app.secret_key = 'your_secret_key'
 
 # Configure Database Model
-app.config["SQLALCHEMY_DATABASE_URL"] = "sqlite:///users.db"
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///users.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-
 db = SQLAlchemy(app)
 
 # Database Model
@@ -42,7 +41,7 @@ def login():
         session['username'] = username
         return  redirect(url_for("dashboard"))
     else:
-        return redirect("index.html")
+        return render_template("index.html")
 
 # Register
 @app.route("/register", methods=["POST"])
@@ -68,8 +67,13 @@ def dashboard():
     return redirect(url_for("home"))
 
 # logout
-
+@app.route("/logout")
+def logout():
+    session.pop('username', None)
+    return redirect(url_for('home'))
 
 
 if __name__ == "__main__":
+    with app.app_context() :
+        db.create_all()
     app.run(debug=True)
