@@ -23,6 +23,8 @@ class User(db.Model):
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
 
+with app.app_context():
+    db.create_all()
 
 # routes
 @app.get("/")
@@ -32,32 +34,38 @@ def home():
     return render_template("index.html")
 
 # login
-@app.route("/login", methods=["POST"])
+@app.route("/login", methods=["GET", "POST"])
 def login():
-    username = request.form['username']
-    password = request.form['password']
-    user = User.query.filter_by(username=username).first()
-    if user and user.check_password(password):
-        session['username'] = username
-        return  redirect(url_for("dashboard"))
-    else:
-        return render_template("index.html")
+    if request.method == "POST":
+        username = request.form['username']
+        password = request.form['password']
+        user = User.query.filter_by(username=username).first()
+        print(user)
+        if user and user.check_password(password):
+            session['username'] = username
+            return  redirect(url_for("dashboard"))
+        else:
+            return render_template("index.html", error='Invalid username or password')
+    return render_template("index.html")
 
 # Register
-@app.route("/register", methods=["POST"])
+@app.route("/register", methods=["GET", "POST"])
 def register():
-    username = request.form['username']
-    password = request.form['password']
-    user = User.query.filter_by(username=username).first()
-    if user:
-        return render_template("index.html", error="User already registered!!")
-    else:
-        new_user = User(username=username)
-        new_user.set_password(password)
-        db.session.add(new_user)
-        db.session.commit()
-        session['username'] = username
-        return redirect(url_for('dashboard'))
+    if request.method == "POST":
+        username = request.form['username']
+        password = request.form['password']
+        user = User.query.filter_by(username=username).first()
+        if user:
+            return render_template("index.html", error="User already registered!!")
+        else:
+            new_user = User(username=username)
+            new_user.set_password(password)
+            db.session.add(new_user)
+            db.session.commit()
+            session['username'] = username
+            return redirect(url_for('dashboard'))
+    return render_template("index.html")
+
 
 # Dashboard
 @app.route("/dashboard")
@@ -72,8 +80,5 @@ def logout():
     session.pop('username', None)
     return redirect(url_for('home'))
 
-
 if __name__ == "__main__":
-    with app.app_context():
-        db.create_all()
     app.run(debug=True)
