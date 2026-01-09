@@ -40,7 +40,7 @@ main {
   margin: 50px auto;
 }
 .container h1 {
-  font-size: 2.5rem;
+  font-size: 1.5rem;
   color: #333;
   margin-bottom: 1.5rem;
 }
@@ -49,7 +49,64 @@ main {
   color: #666;
   margin-bottom: 20px;
 }
-.container .input-field {
+
+.content {
+  background-color: indianred;
+  max-width: 800px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+.content h1 {
+  color: aquamarine;
+}
+.content h4 {
+  color: #666;
+}
+.content table {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+}
+.content table th, .content table td {
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+.content table th th, .content table td th {
+  background-color: #f0f0f0;
+  color: #333;
+}
+.content a {
+  display: inline-block;
+  padding: 8px 16px;
+  margin: 5px;
+  border-radius: 20px;
+  background-color: dodgerblue;
+  color: #fff;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+.content a:hover {
+  background-color: darkslateblue;
+}
+.content input {
+  padding: 10px;
+  margin: 5px;
+  border: solid 1px;
+  border-radius: 5px;
+}
+.content #btn_add {
+  background-color: darkgreen;
+  color: #fff;
+  cursor: pointer;
+}
+.content #btn_add:hover {
+  background-color: darkgreen;
+}
+.content .input-field {
   width: 100%;
   padding: 10px;
   margin: 10px 0;
@@ -58,11 +115,11 @@ main {
   font-size: 1.5rem;
   box-sizing: border-box;
 }
-.container .input-field:focus {
+.content .input-field:focus {
   border-color: #007bff;
   outline: 0;
 }
-.container .btn {
+.content .btn {
   width: 100%;
   padding: 10px;
   margin: 10px 0;
@@ -72,25 +129,25 @@ main {
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
-.container .btn.btn-login {
+.content .btn.btn-login {
   background-color: #07bfff;
   color: #fff;
 }
-.container .btn.btn-login:hover {
+.content .btn.btn-login:hover {
   background-color: #0056b3;
 }
-.container .btn.btn-register {
+.content .btn.btn-register {
   background-color: #28a745;
   color: #fff;
 }
-.container .btn.btn-register:hover {
+.content .btn.btn-register:hover {
   background-color: #218838;
 }
-.container .btn.btn-logout {
+.content .btn.btn-logout {
   background-color: #07bfff;
   color: #fff;
 }
-.container .btn.btn-logout:hover {
+.content .btn.btn-logout:hover {
   background-color: #0056b3;
 }
 
