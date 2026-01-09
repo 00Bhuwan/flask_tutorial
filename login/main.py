@@ -1,12 +1,14 @@
 from flask import Flask, redirect, render_template, request, session, url_for
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
+from toignore import key
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
 
 # Configure Database Model
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///users.db"
+app.config['SQLALCHEMY_DATABASE_URI'] = (f'postgresql+psycopg2://postgres:{key}@localhost:5432/user_psg')
+# app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///users.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
 
@@ -15,7 +17,7 @@ class User(db.Model):
     # class variable
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(100), unique=True, nullable=False)
-    password_hash = db.Column(db.String(150), nullable=False)
+    password_hash = db.Column(db.String(1500), nullable=False)
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
